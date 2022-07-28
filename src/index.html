@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kitties App</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="navbar">
+          <picture class="logo__wrapper">
+            <img class="logo" src="./images/kittiesAppLogo.svg" alt="kitties logo">
+          </picture>
+        </nav>
+      </header>
+      <main class="hero">
+        <picture class="hero__img-wrapper">
+          <source media="(min-width: 768px)" srcset="./images/principalKittieX2.png">
+          <img class="hero__img" src="./images/principalKittie.png" alt="Kitties app hero image">
+        </picture>
+        <div class="cta">
+          <h1 class="cta__text">Amazing way to have fun with cats😸</h1>
+        </div>
+      </main>
+      <section class="random">
+        <div class="random__info">
+          <h2 class="random__title">Choose your favorites kitties</h2>
+          <p class="random__text">Select how many cats  you want to see to choose your favorites</p>
+          <form class="random__form">
+            <input type="text" required class="random__input" value="4" pattern="[0-9]{1,2}">
+            <button class="random__button">GO</button>
+          </form>
+        </div>
+
+        <!-- Dynamic kitties -->
+      </section>
+      <section class="upload">
+        <h2>Or upload your own kittie (make sure is really a cat image) to add to favorites</h2>
+        <form action="">
+          <!-- Drag an drop file -->
+          <label for="file" class="upload__label">
+            <span>Drag and drop a file or click here to select a file to upload</span>
+            <img src="./images/previewImg.svg" alt="preview">
+            <input type="file" name="file" id="file" class="upload__file" accept="image/*">
+          </label>
+
+        </form>
+      </section>
+      <section class="favorites">
+        <h2>Your Favorite kitties</h2>
+      </section>
+      <!-- <footer>Made with 🧡 by Francisco Solis</footer> -->
+    </div>
+    <script type="module" src="./main.js" defer></script>
+  </body>
+</html>
