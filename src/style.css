@@ -155,4 +155,33 @@ body {
   margin-top: 40px;
 }
 
+.upload__form {
+  padding: 15px;
+  border: 2px dashed black;
+  background-color: var(--color-primary);
+}
 
+.upload__text {
+  font-size: 1.4rem;
+  line-height: 20px;
+}
+
+.upload__file {
+  display: none;
+}
+
+.upload__img {
+  display: block;
+  margin: 20px auto;
+}
+
+.upload__button {
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: block;
+  background-color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
