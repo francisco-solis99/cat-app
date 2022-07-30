@@ -156,10 +156,15 @@ body {
 }
 
 .upload__form {
+  margin-top: 25px;
+}
+
+.upload__zone {
   padding: 15px;
   border: 2px dashed black;
   background-color: var(--color-primary);
 }
+
 
 .upload__text {
   font-size: 1.4rem;
@@ -172,10 +177,30 @@ body {
 
 .upload__img {
   display: block;
+  width: 100%;
+  max-width: 80px;
+  min-width: 60px;
+  object-fit: cover;
   margin: 20px auto;
 }
 
-.upload__button {
+.upload__img.loaded {
+  opacity: 0.8;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(15px);
+  }
+  10% {
+    opacity: 1;
+    filter: brightness(2) blur(5px);
+  }
+}
+
+.select__button {
   padding: 8px;
   border: 2px solid black;
   border-radius: 8px;
@@ -183,5 +208,17 @@ body {
   display: block;
   background-color: #fff;
   font-weight: 500;
+  cursor: pointer;
+}
+
+.upload__button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 1.4rem;
+  border:0;
+  background-color:#f54b7e;
+  color: #fff;
   cursor: pointer;
 }

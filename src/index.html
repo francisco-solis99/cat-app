@@ -35,26 +35,51 @@
           </form>
         </div>
 
-        <!-- Dynamic kitties -->
+        <!-- Dynamic random kitties -->
       </section>
       <section class="upload">
-        <h2 class="upload__title">Or upload your own kittie (make sure is really a cat image) to add to favorites</h2>
+        <h2 class="upload__title">Or upload your own kittie (make sure is really a cat image and you either own the copyright) to add to favorites</h2>
         <form action="" class="upload__form">
           <!-- Drag an drop file -->
+          <div class="upload__zone">
           <label for="file" class="upload__label">
-            <span class="upload__text">Drag and drop your image here or select a file to upload</span>
-            <img src="./images/previewImg.svg" alt="preview" class="upload__img">
-            <input type="file" name="file" id="file" class="upload__file" accept="image/*">
-            <button class="upload__button" type="button">Select File</button>
-          </label>
-
-        </form>
+              <span class="upload__text">Drag and drop your image here or select a file to upload</span>
+              <img src="./images/previewImg.svg" alt="preview" class="upload__img">
+              <input type="file" name="file" id="file" class="upload__file" accept="image/*">
+              <button class="select__button" type="button">
+                Select File
+              </button>
+            </label>
+          </div>
+          <button class="upload__button" type="button">Add to favorites</button>
+       </form>
       </section>
       <section class="favorites">
         <h2>Your Favorite kitties</h2>
+        <!-- Dynamic favorite kitties -->
       </section>
       <!-- <footer>Made with 🧡 by Francisco Solis</footer> -->
     </div>
     <script type="module" src="./main.js" defer></script>
   </body>
 </html>
+
+
+<!-- TODO:
+*Random section
+=> Add to favorites when click a kittie
+=> Add pagination if the number of kitties is bigger than 5
+=> No repeat the kitties that alredy are in the favorites section
+
+*Upload section
+=> Upload file and preview it ✅
+=> Drag and drop image
+=> Loader from the image
+=> Add to favorites (loader?)
+
+*Favories section
+=> Load the favorite kitties
+=> Button for remove the kitties from this section
+
+
+-->
