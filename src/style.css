@@ -152,17 +152,36 @@ body {
 /* Upload section Styles */
 
 .upload {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 .upload__form {
   margin-top: 25px;
 }
 
-.upload__zone {
+.upload__label {
   padding: 15px;
-  border: 2px dashed black;
+  display: block;
+  position: relative;
   background-color: var(--color-primary);
+  border: 2px solid black;
+}
+
+.upload__zone {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 15px;
+  display: grid;
+  place-content: center;
+  font-size: 1.8rem;
+  opacity: 0;
+}
+
+.upload__zone.active {
+  border: 2px dashed black;
+  background-color: rgba(247, 247, 159, 0.85);
+  opacity: 1;
 }
 
 
@@ -221,4 +240,8 @@ body {
   background-color:#f54b7e;
   color: #fff;
   cursor: pointer;
+}
+
+.favorites {
+  margin-top: 40px;
 }

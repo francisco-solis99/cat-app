@@ -29,9 +29,17 @@ export default class KittieView {
     // add listeners for upload section
     const inputFile = selectHtmlElement(this.uploadSection, '.upload__file');
     const selectFileBtn = selectHtmlElement(this.uploadSection, '.select__button');
+    const dropArea = selectHtmlElement(this.uploadSection, '.upload__zone');
+    //file listeners
     selectFileBtn.addEventListener('click', () => inputFile.click());
-
     inputFile.addEventListener('change', (e) => this.handlerPreviewImage(e));
+    // drag and drop listeners
+    dropArea.addEventListener('dragover', (e) => e.preventDefault());
+    dropArea.addEventListener('dragenter', (e) => this.handleDragEnter(e));
+    dropArea.addEventListener('dragend', (e) => this.handleLeave(e));
+    dropArea.addEventListener('dragexit', (e) => this.handleLeave(e));
+    dropArea.addEventListener('dragleave', (e) => this.handleLeave(e));
+    dropArea.addEventListener('drop', (e) => this.handleDrop(e, inputFile));
   }
 
   // main functions
@@ -96,11 +104,31 @@ export default class KittieView {
     // send a error with modal
     Swal.fire({
       title: 'Error!',
-      text: 'The image type has to be .jpg or .png and also teh image has to be a cat',
+      text: 'The image type has to be .jpg or .png and remember it has to be a cat',
       icon: 'error',
       confirmButtonText: 'Ok'
     });
   }
+
+  handleDragEnter(e) {
+    e.target.classList.add('active');
+  }
+
+  handleLeave(e){
+    e.preventDefault();
+    e.target.classList.remove('active');
+  }
+
+  handleDrop(e, inputFile){
+    e.preventDefault();
+    e.target.classList.remove('active');
+
+    // get the file and fire the change event to preview the image
+    const files = e.dataTransfer.files;
+    inputFile.files = files;
+    inputFile.dispatchEvent(new Event('change'));
+  }
+
 
 
   // utils functions
