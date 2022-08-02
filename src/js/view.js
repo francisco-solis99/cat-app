@@ -22,11 +22,11 @@ export default class KittieView {
     // util for select a HTML element
     const selectHtmlElement = (parent, query) => parent.querySelector(query) ?? null;
 
-    // add listeners for random section
+    // => add listeners for random section
     const form = selectHtmlElement(this.randomSection, '.random__form');
     form.addEventListener('submit', (e) => this.handlerSubmitRandom(e));
 
-    // add listeners for upload section
+    // => add listeners for upload section
     const inputFile = selectHtmlElement(this.uploadSection, '.upload__file');
     const selectFileBtn = selectHtmlElement(this.uploadSection, '.select__button');
     const dropArea = selectHtmlElement(this.uploadSection, '.upload__zone');
@@ -40,6 +40,9 @@ export default class KittieView {
     dropArea.addEventListener('dragexit', (e) => this.handleLeave(e));
     dropArea.addEventListener('dragleave', (e) => this.handleLeave(e));
     dropArea.addEventListener('drop', (e) => this.handleDrop(e, inputFile));
+    // upload the image listener
+    const uploadBtn = selectHtmlElement(this.uploadSection, '.upload__button');
+
   }
 
   // main functions
@@ -62,7 +65,15 @@ export default class KittieView {
     img.alt = 'Kitty Image';
     img.loading = 'lazy';
     img.classList.add('random__kitty-img');
+    const div = document.createElement('div');
+    div.classList.add('random__like-container');
+    const likeBtn = document.createElement('div');
+    likeBtn.classList.add('random__like-button');
+    // Add listener of load to favorites
+    likeBtn.addEventListener('click', (e) => this.loadFavoriteKitties(e, kitty), { once: true });
+    div.appendChild(likeBtn);
     figure.appendChild(img);
+    figure.appendChild(div);
     return figure;
   }
 
@@ -71,6 +82,10 @@ export default class KittieView {
     const reponse = await fetch(randomUrl);
     const kitties = await reponse.json();
     return kitties;
+  }
+
+  async loadFavoriteKitties(e,kitty){
+    e.target.classList.add('liked');
   }
 
 

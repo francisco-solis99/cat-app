@@ -141,6 +141,8 @@ body {
   display: inline-block;
   margin: 0;
   box-shadow: var(--shadow-elevation-high);
+  position: relative;
+  overflow: hidden;
 }
 
 .random__kitty-img {
@@ -148,6 +150,74 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+/* favorites button */
+.random__like-container {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  width: 20%;
+  height: 20%;
+
+  /* background-color: rgba(0, 0, 0, 0.5); */
+}
+/* background-color: rgba(252, 252, 142, 0.4); */
+
+/* .random__kitty-wrapper:hover > .random__like-container {
+  top: 0;
+  opacity: 1;
+}
+
+.random__kitty-wrapper:hover > .random__kitty-img  {
+  filter: sepia(1);
+} */
+
+.random__like-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.random__like-button::before, .random__like-button::after {
+  content: '';
+  position: absolute;
+  transform: rotate(-45deg);
+  width: 20px;
+  height: 35px;
+  left: 20px;
+  transform-origin: 0 100%;
+  border-radius: 12px 12px 0 0;
+  background-color: #ccc9c8;
+  transition: all ease 250ms;
+}
+
+.random__like-button::after {
+  transform: rotate(45deg);
+  left: 0px;
+  transform-origin: 100% 100%;
+}
+
+.random__like-button.liked::before, .random__like-button.liked::after {
+  background-color: var(--color-secundary);
+}
+
+.random__like-button.liked {
+  animation: liked 300ms ease;
+}
+
+@keyframes liked {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
 
 /* Upload section Styles */
 
@@ -244,4 +314,27 @@ body {
 
 .favorites {
   margin-top: 40px;
+}
+
+
+
+@media screen and (min-width:768px) {
+  .random__like-container {
+    inset: 0;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: all 300ms ease;
+  }
+
+  .random__kitty-wrapper:hover > .random__like-container {
+    top: 0;
+    opacity: 1;
+  }
+
+  .random__kitty-wrapper:hover > .random__kitty-img  {
+    filter: sepia(1);
+  }
 }
