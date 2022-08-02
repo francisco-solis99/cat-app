@@ -18,8 +18,8 @@
       </header>
       <main class="hero">
         <picture class="hero__img-wrapper">
-          <source media="(min-width: 768px)" srcset="./images/principalKittieX2.png">
-          <img class="hero__img" src="./images/principalKittie.png" alt="Kitties app hero image">
+          <!-- <source media="(min-width: 768px)" srcset="./images/principalKittieX3.png"> -->
+          <img class="hero__img" src="./images/principalKittie.svg" alt="Kitties app hero image">
         </picture>
         <div class="cta">
           <h1 class="cta__text">Amazing way to have fun with cats😸</h1>
@@ -38,7 +38,8 @@
         <!-- Dynamic random kitties -->
       </section>
       <section class="upload">
-        <h2 class="upload__title">Or upload your own kittie (make sure is really a cat image and you either own the copyright) to add to favorites</h2>
+        <h2 class="upload__title">Or upload your own kittie to add to favorites</h2>
+        <p class="upload__text">Make sure is really a cat image and you either own the copyright</p>
         <form action="" class="upload__form">
           <label for="file" class="upload__label">
               <!-- Drag an drop file -->
@@ -54,11 +55,14 @@
        </form>
       </section>
       <section class="favorites">
-        <h2>Your Favorite kitties</h2>
+        <h2 class="favorites__title">Your Favorite kitties</h2>
+        <p class="favorites__text">You can delete a kitty unselect it using the heart button</p>
         <!-- Dynamic favorite kitties -->
       </section>
       <footer class="footer">
-        <h4 class="footer__text">Made with 🧡 by Francisco Solis</h4>
+        <h4 class="footer__text">
+          Made with 🧡 by <a href="https://github.com/francisco-solis99" class="footer__link">Francisco Solis</a> with <a href="https://docs.thecatapi.com/" class="footer__link"> The Cat API</a>😻
+        </h4>
       </footer>
     </div>
     <script type="module" src="./main.js" defer></script>
@@ -77,7 +81,7 @@
 => Upload file and preview it ✅
 => Drag and drop image ✅
 => Loader from the image ✅
-=> Add to favorites (loader?)
+=> Add to favorites (loader?) ✅
 
 *Favories section
 => Load the favorite kitties ✅

@@ -46,16 +46,41 @@ body {
   justify-content: center;
 }
 
-.hero {
-  text-align: center;
+.navbar {
+  width: 100%;
+  /* background-color: red; */
+}
+
+.logo__wrapper {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 280px;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero__img-wrapper{
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 40px;
+  width: 30%;
+  max-width: 280px;
 }
 
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero {
+  text-align: center;
+}
 
 .cta {
   position: relative;
@@ -222,11 +247,11 @@ body {
 /* Upload section Styles */
 
 .upload {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 .upload__form {
-  margin-top: 25px;
+  margin-top: 30px;
   text-align: center;
 }
 
@@ -291,21 +316,25 @@ body {
 }
 
 .select__button {
-  padding: 8px;
-  border: 2px solid black;
-  border-radius: 8px;
+  width: 20%;
+  min-width: 100px;
+  display: inline-block;
   margin: 0 auto;
-  display: block;
-  background-color: #fff;
+  padding: 10px;
   font-weight: 500;
+  border-radius: 10px;
+  border: 2px solid black;
+  background-color: #fff;
   cursor: pointer;
 }
 
 .upload__button {
   display: inline-block;
+  min-width: 200px;
   margin-top: 20px;
   padding: 15px;
   font-size: 1.4rem;
+  font-weight: 700;
   border:0;
   background-color:#f54b7e;
   color: #fff;
@@ -315,13 +344,12 @@ body {
 
 /* favorite kitties  section */
 .favorites {
-  margin: 40px auto;
+  margin: 50px auto;
 }
 
-.favorite__kitties-container {
-
+.favorites__text {
+  font-size: 1.2rem;
 }
-
 
 /* footer styles */
 footer {
@@ -335,12 +363,33 @@ footer {
 }
 
 .footer__text {
-  font-size: 1.4rem;
+  font-size: 1rem;
+}
+
+.footer__link {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-secundary);
 }
 
 
 
+
+/* media queryes */
 @media screen and (min-width:768px) {
+
+  .cta__text {
+    font-size: 2.4rem;
+  }
+
+  .random__title, .upload__title, .favorites__title {
+    font-size: 1.8rem;
+  }
+
+  .random__text, .upload__text, .favorites__text {
+    font-size: 1.4rem;
+  }
+
   .kitty__like-container {
     inset: 0;
     top: 100%;
@@ -363,6 +412,64 @@ footer {
   .kitty__wrapper {
     max-width: 300px;
   }
+
+
 }
 
 
+@media screen and (min-width:1048px) {
+
+  .logo__wrapper {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .cta .cta__text {
+    font-size: 2.8rem;
+    width: 80%;
+    line-height: 3.8rem;
+  }
+
+  .random__title, .upload__title, .favorites__title {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .random__text, .upload__text, .favorites__text {
+    font-size: 1.6rem;
+    margin: 8px 0;
+  }
+
+  .random__input, .random__button {
+    font-size: 1.6rem;
+  }
+
+  .upload__label {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .upload__img {
+    max-width: 120px;
+  }
+
+  .select__button {
+    font-size: 1.4rem;
+    padding: 15px;
+    max-width: 160px;
+  }
+
+  .upload__button {
+    font-size: 1.6rem;
+  }
+
+  .favorite__kitties-container {
+    justify-items: center;
+  }
+
+  .footer__text {
+    font-size: 1.4rem;
+  }
+}
