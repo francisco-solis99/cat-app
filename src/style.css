@@ -128,7 +128,7 @@ body {
   cursor: pointer;
 }
 
-.random__kitties-container {
+.random__kitties-container, .favorite__kitties-container {
   margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -137,7 +137,7 @@ body {
   box-sizing: border-box;
 }
 
-.random__kitty-wrapper {
+.kitty__wrapper {
   display: inline-block;
   margin: 0;
   box-shadow: var(--shadow-elevation-high);
@@ -145,14 +145,14 @@ body {
   overflow: hidden;
 }
 
-.random__kitty-img {
+.kitty__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* favorites button */
-.random__like-container {
+.kitty__like-container {
   position: absolute;
   bottom: 0;
   right: 10px;
@@ -172,7 +172,7 @@ body {
   filter: sepia(1);
 } */
 
-.random__like-button {
+.kitty__like-button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -182,7 +182,7 @@ body {
   cursor: pointer;
 }
 
-.random__like-button::before, .random__like-button::after {
+.kitty__like-button::before, .kitty__like-button::after {
   content: '';
   position: absolute;
   transform: rotate(-45deg);
@@ -195,17 +195,17 @@ body {
   transition: all ease 250ms;
 }
 
-.random__like-button::after {
+.kitty__like-button::after {
   transform: rotate(45deg);
   left: 0px;
   transform-origin: 100% 100%;
 }
 
-.random__like-button.liked::before, .random__like-button.liked::after {
+.kitty__like-button.liked::before, .kitty__like-button.liked::after {
   background-color: var(--color-secundary);
 }
 
-.random__like-button.liked {
+.kitty__like-button.liked {
   animation: liked 300ms ease;
 }
 
@@ -227,6 +227,7 @@ body {
 
 .upload__form {
   margin-top: 25px;
+  text-align: center;
 }
 
 .upload__label {
@@ -301,25 +302,46 @@ body {
 }
 
 .upload__button {
-  display: block;
-  margin: 0 auto;
+  display: inline-block;
   margin-top: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 1.4rem;
   border:0;
   background-color:#f54b7e;
   color: #fff;
   cursor: pointer;
+  border-radius: 10px;
 }
 
+/* favorite kitties  section */
 .favorites {
-  margin-top: 40px;
+  margin: 40px auto;
+}
+
+.favorite__kitties-container {
+
+}
+
+
+/* footer styles */
+footer {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 60px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-primary);
+}
+
+.footer__text {
+  font-size: 1.4rem;
 }
 
 
 
 @media screen and (min-width:768px) {
-  .random__like-container {
+  .kitty__like-container {
     inset: 0;
     top: 100%;
     width: 100%;
@@ -329,12 +351,18 @@ body {
     transition: all 300ms ease;
   }
 
-  .random__kitty-wrapper:hover > .random__like-container {
+  .kitty__wrapper:hover > .kitty__like-container {
     top: 0;
     opacity: 1;
   }
 
-  .random__kitty-wrapper:hover > .random__kitty-img  {
+  .kitty__wrapper:hover > .kitty__img  {
     filter: sepia(1);
   }
+
+  .kitty__wrapper {
+    max-width: 300px;
+  }
 }
+
+

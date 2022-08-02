@@ -10,6 +10,7 @@ export default class KittieView {
       apiKey: '6475bd37-29d5-4525-a122-126fa916ea01',
       random: '/images/search',
       favorites: '/favourites',
+      upload: '/images/upload'
     }
     this.randomSection = document.querySelector('.random');
     this.uploadSection = document.querySelector('.upload');
@@ -19,6 +20,9 @@ export default class KittieView {
   init(){
     // render the initial random kitties at the beginning
     this.renderRandomKitties(4);
+    // render the favorite kitties at the beginning
+    this.renderFavoriteKitties();
+
     // util for select a HTML element
     const selectHtmlElement = (parent, query) => parent.querySelector(query) ?? null;
 
@@ -42,35 +46,49 @@ export default class KittieView {
     dropArea.addEventListener('drop', (e) => this.handleDrop(e, inputFile));
     // upload the image listener
     const uploadBtn = selectHtmlElement(this.uploadSection, '.upload__button');
-
+    uploadBtn.addEventListener('click', () => this.handlerUploadImage());
   }
 
   // main functions
+
+  // RANDOM KITTIES
   async renderRandomKitties(numKitties = 1) {
     const div = document.createElement('div');
     div.classList.add('random__kitties-container');
     const kitties = await this.loadRandomKitties(numKitties);
     kitties.forEach(async (kitty) => {
-      const kittyElement = await this.renderRandomKitty(kitty);
+      const kittyElement = await this.renderKitty(kitty);
       div.appendChild(kittyElement);
     });
     this.randomSection.appendChild(div);
   }
 
-  async renderRandomKitty(kitty){
+  async renderKitty(kitty, isFavorite = false) {
     const figure = document.createElement('figure');
-    figure.classList.add('random__kitty-wrapper');
+    figure.classList.add('kitty__wrapper');
     const img = document.createElement('img');
-    img.src = kitty.url;
     img.alt = 'Kitty Image';
     img.loading = 'lazy';
-    img.classList.add('random__kitty-img');
+    img.classList.add('kitty__img');
     const div = document.createElement('div');
-    div.classList.add('random__like-container');
+    div.classList.add('kitty__like-container');
     const likeBtn = document.createElement('div');
-    likeBtn.classList.add('random__like-button');
-    // Add listener of load to favorites
-    likeBtn.addEventListener('click', (e) => this.loadFavoriteKitties(e, kitty), { once: true });
+    likeBtn.classList.add('kitty__like-button');
+
+    if(isFavorite) {
+      img.src = kitty.image.url;
+      likeBtn.classList.add('liked');
+      // Add listener to remove favorite kitties
+      likeBtn.addEventListener('click', (e) => this.deleteFavoriteKitties(e, kitty), { once: true });
+    } else {
+      img.src = kitty.url;
+      // Add listener to add favorite kitties
+      likeBtn.addEventListener('click', (e) => {
+        e.target.classList.add('liked');
+        this.addFavoriteKitties(kitty), { once: true };
+      });
+    }
+
     div.appendChild(likeBtn);
     figure.appendChild(img);
     figure.appendChild(div);
@@ -80,18 +98,17 @@ export default class KittieView {
   async loadRandomKitties(numKitties) {
     try {
       const randomUrl = `${this.#API.baseUrl}${this.#API.random}?limit=${numKitties}`;
-      const reponse = await fetch(randomUrl);
-      const kitties = await reponse.json();
+      const response = await fetch(randomUrl);
+      const kitties = await response.json();
       return kitties;
     } catch (error) {
       console.log(error);
     }
-
   }
 
-  async loadFavoriteKitties(e,kitty){
+  // FAVORITE KITTIES
+  async addFavoriteKitties(kitty){
     try {
-      e.target.classList.add('liked');
       const favoritesUrl = `${this.#API.baseUrl}${this.#API.favorites}`;
       const response = await fetch(favoritesUrl, {
         method: 'POST',
@@ -103,6 +120,53 @@ export default class KittieView {
           image_id: kitty.id
         }),
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteFavoriteKitties(e, kitty) {
+    try {
+      e.target.classList.remove('liked');
+      const deleteUrl = `${this.#API.baseUrl}${this.#API.favorites}/${kitty.id}`;
+      const response = await fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+          'X-API-KEY': this.#API.apiKey,
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async loadFavoriteKitties(){
+    try {
+      const favoritesUrl = `${this.#API.baseUrl}${this.#API.favorites}`;
+      const response = await fetch(favoritesUrl, {
+        method: 'GET',
+        headers: {
+          'X-API-KEY': this.#API.apiKey,
+        },
+      });
+      const kitties = await response.json();
+      return kitties;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async renderFavoriteKitties() {
+    try {
+      const div = document.createElement('div');
+      div.classList.add('favorite__kitties-container');
+      const kitties = await this.loadFavoriteKitties();
+      console.log(kitties);
+      kitties.forEach(async (kitty) => {
+        const kittyElement = await this.renderKitty(kitty, true);
+        div.appendChild(kittyElement);
+      });
+      this.favoritesSection.appendChild(div);
     } catch (error) {
       console.log(error);
     }
@@ -162,6 +226,35 @@ export default class KittieView {
     const files = e.dataTransfer.files;
     inputFile.files = files;
     inputFile.dispatchEvent(new Event('change'));
+  }
+
+  async handlerUploadImage(){
+    try {
+      const form = this.uploadSection.querySelector('.upload__form');
+      const formData = new FormData(form);
+      const {name: fileName, size: fileSize} = formData.get('file');
+      if(fileName === '' || fileSize === 0) {
+        throw new Error('No file selected');
+      }
+      const uploadURL = `${this.#API.baseUrl}${this.#API.upload}`;
+      const response = await fetch(uploadURL, {
+        method: 'POST',
+        headers: {
+          'X-API-KEY': this.#API.apiKey,
+        },
+        body: formData,
+      });
+      const kittyResponse = await response.json();
+      this.addFavoriteKitties(kittyResponse);
+
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
+    }
   }
 
 
