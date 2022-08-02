@@ -78,14 +78,34 @@ export default class KittieView {
   }
 
   async loadRandomKitties(numKitties) {
-    const randomUrl = `${this.#API.baseUrl}${this.#API.random}?limit=${numKitties}`;
-    const reponse = await fetch(randomUrl);
-    const kitties = await reponse.json();
-    return kitties;
+    try {
+      const randomUrl = `${this.#API.baseUrl}${this.#API.random}?limit=${numKitties}`;
+      const reponse = await fetch(randomUrl);
+      const kitties = await reponse.json();
+      return kitties;
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   async loadFavoriteKitties(e,kitty){
-    e.target.classList.add('liked');
+    try {
+      e.target.classList.add('liked');
+      const favoritesUrl = `${this.#API.baseUrl}${this.#API.favorites}`;
+      const response = await fetch(favoritesUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': this.#API.apiKey,
+        },
+        body: JSON.stringify({
+          image_id: kitty.id
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
