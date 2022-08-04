@@ -66,10 +66,11 @@ body {
 
 .hero__img-wrapper{
   display: inline-block;
+  width: 30%;
+  max-width: 250px;
+  min-width: 140px;
   margin-top: 20px;
   margin-bottom: 40px;
-  width: 30%;
-  max-width: 280px;
 }
 
 .hero__img {

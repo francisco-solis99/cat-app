@@ -76,11 +76,13 @@ export default class KittieView {
     likeBtn.classList.add('kitty__like-button');
 
     if(isFavorite) {
+      figure.dataset.id = kitty.image.id;
       img.src = kitty.image.url;
       likeBtn.classList.add('liked');
       // Add listener to remove favorite kitties
       likeBtn.addEventListener('click', (e) => this.deleteFavoriteKitties(e, kitty), { once: true });
     } else {
+      figure.dataset.id = kitty.id;
       img.src = kitty.url;
       // Add listener to add favorite kitties
       likeBtn.addEventListener('click', (e) => {
@@ -120,8 +122,23 @@ export default class KittieView {
           image_id: kitty.id
         }),
       });
+      // if the response is ok, then render the kitty
+      if(response.ok) {
+        const {id: favoriteId} = await response.json();
+        const responseFavorite = await this.loadFavoriteKitties(favoriteId);
+        const favoriteKittyElement = await this.renderKitty(responseFavorite, true);
+        const favoritesContainer =  this.favoritesSection.querySelector('.favorite__kitties-container');
+        favoritesContainer.appendChild(favoriteKittyElement);
+      }
+
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Something went wrong, please try again later',
+        subtitle: error.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
     }
   }
 
@@ -135,14 +152,20 @@ export default class KittieView {
           'X-API-KEY': this.#API.apiKey,
         }
       });
+      // delete the kitty from the DOM
+      const kittyElement = this.favoritesSection.querySelector(`figure[data-id="${kitty.image.id}"]`);
+      kittyElement.remove();
+
     } catch (error) {
       console.log(error);
     }
   }
 
-  async loadFavoriteKitties(){
+  async loadFavoriteKitties(specificKittyId) {
     try {
-      const favoritesUrl = `${this.#API.baseUrl}${this.#API.favorites}`;
+
+      const specificKittyPartUrl = `${specificKittyId === undefined ? '' : `/${specificKittyId}`}`;
+      const favoritesUrl = `${this.#API.baseUrl}${this.#API.favorites}${specificKittyPartUrl}`;
       const response = await fetch(favoritesUrl, {
         method: 'GET',
         headers: {
